@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covid-data-source-deployment
+spec:
+  selector:
+    matchLabels:
+      app: covid-data-source
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: covid-data-source
+    spec:
+      containers:
+        - name: covid-data-source
+          image: waterfox83/covid-data-source-service:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+---
+# The service (LoadBalancer type) which can be used to access the above running container.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: covid-data-source-svc
+  labels:
+    app: covid-data-source
+spec:
+  loadBalancerIP: 34.67.9.113 #staticIP
+  type: LoadBalancer
+  selector:
+    app: covid-data-source
+  ports:
+    - nodePort: 30002
+      port: 8080
+      name: http-port
+      targetPort: 8080
