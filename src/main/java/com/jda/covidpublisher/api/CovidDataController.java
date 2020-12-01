@@ -39,6 +39,11 @@ public class CovidDataController {
     return covidDataService.getCountryStats(countryName);
   }
 
+  @GetMapping(Routes.TEST)
+  public String getTestData() throws IOException {
+    return "Hello World";
+  }
+
 /*
   private final String HEADER_RAPIDAPI_HOST = "x-rapidapi-host";
   private final String HEADER_RAPIDAPI_KEY = "x-rapidapi-key";

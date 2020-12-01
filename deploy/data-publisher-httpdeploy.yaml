@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: covid-data-source
-          image: waterfox83/covid-data-source-service:latest
+          image: adlsacr.azurecr.io/covid-data-source-service:v1
           imagePullPolicy: Always
           ports:
             - name: http
@@ -29,7 +29,7 @@ metadata:
   labels:
     app: covid-data-source
 spec:
-  loadBalancerIP: 34.67.9.113 #staticIP
+#  loadBalancerIP: 34.67.9.113 #staticIP
   type: LoadBalancer
   selector:
     app: covid-data-source
