@@ -2,6 +2,6 @@ FROM openjdk:8-alpine
 
 VOLUME /tmp
 
-ARG JAR_FILE=build/libs/${rootProject.name}.jar
+ARG JAR_FILE=build/libs/covid-data-source-service.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
