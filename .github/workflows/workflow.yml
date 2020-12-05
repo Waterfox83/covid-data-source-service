@@ -6,7 +6,7 @@ env:
 on:
   push:
     branches:
-      - master
+      - dev
   pull_request:
     branches:
       - master
@@ -35,7 +35,8 @@ jobs:
       # Check out source code.
       - name: Check out source code
         uses: actions/checkout@v2
-
+      - name: Build
+        run: ./gradlew clean build
       # Build and push container image.
       - name: Build and push container image
         uses: docker/build-push-action@v1
