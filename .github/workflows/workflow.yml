@@ -28,8 +28,6 @@ jobs:
       # Run unit tests.
       - name: Run unit tests
         run: ./gradlew test
-      - name: Build
-        run: ./gradlew clean build
 
   build-and-release:
     runs-on: ubuntu-latest
@@ -37,7 +35,8 @@ jobs:
       # Check out source code.
       - name: Check out source code
         uses: actions/checkout@v2
-
+      - name: Build
+        run: ./gradlew clean build
       # Build and push container image.
       - name: Build and push container image
         uses: docker/build-push-action@v1
