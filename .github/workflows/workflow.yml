@@ -35,6 +35,7 @@ jobs:
       # Check out source code.
       - name: Check out source code
         uses: actions/checkout@v2
+      # Build the jar
       - name: Build
         run: ./gradlew clean build
       # Build and push container image.
@@ -47,36 +48,36 @@ jobs:
           dockerfile: Dockerfile
           tag_with_ref: true
           tag_with_sha: true # sha-${GITHUB_SHA::7}
-#
-#  deploy:
-#    runs-on: ubuntu-latest
+
+  deploy:
+    runs-on: ubuntu-latest
 #    if: github.ref == 'refs/heads/master'
-#    needs:
-#      - run-tests
-#      - build-and-release
-#    steps:
-#      # Check out source code.
-#      - name: Check out source code
-#        uses: actions/checkout@v2
-#      - name: Set up kubectl
-#        run: |-
-#          curl -sfLo kubectl https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
-#          chmod +x kubectl
-#          sudo mv kubectl /usr/local/bin/
-#      - name: Configure kubectl
-#        run: echo ${{ secrets.KUBECONFIG }} | base64 --decode > kubeconfig.yml
-#      # Set up Kustomize.
-#      - name: Set up Kustomize
-#        run: |-
-#          curl -sfL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz | tar -xzf -
-#          sudo mv kustomize /usr/local/bin/
-#      # Kustomize Kubernetes resources.
-#      - name: Kustomize Kubernetes resources
-#        working-directory: ./manifests
-#        run: kustomize edit set image REPOSITORY:TAG=${IMAGE_REPOSITORY}:sha-${GITHUB_SHA::7}
-#      # Deploy to Kubernetes.
-#      - name: Deploy to Kubernetes
-#        run: kubectl --kubeconfig kubeconfig.yml apply --kustomize manifests/
-#      # Validate deployment.
-#      - name: Validate deployment
-#        run: kubectl --kubeconfig kubeconfig.yml rollout status --timeout 120s deployment/foobar
+    needs:
+      - run-tests
+      - build-and-release
+    steps:
+      # Check out source code.
+      - name: Check out source code
+        uses: actions/checkout@v2
+      - name: Set up kubectl
+        run: |-
+          curl -sfLo kubectl https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+      - name: Configure kubectl
+        run: echo ${{ secrets.KUBECONFIG }} | base64 --decode > kubeconfig.yml
+      # Set up Kustomize.
+      - name: Set up Kustomize
+        run: |-
+          curl -sfL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz | tar -xzf -
+          sudo mv kustomize /usr/local/bin/
+      # Kustomize Kubernetes resources.
+      - name: Kustomize Kubernetes resources
+        working-directory: ./deploy
+        run: kustomize edit set image REPOSITORY:TAG=${IMAGE_REPOSITORY}:dev
+      # Deploy to Kubernetes.
+      - name: Deploy to Kubernetes
+        run: kubectl --kubeconfig kubeconfig.yml apply --kustomize deploy/
+      # Validate deployment.
+      - name: Validate deployment
+        run: kubectl --kubeconfig kubeconfig.yml rollout status --timeout 120s deployment/covid-data-source-deployment

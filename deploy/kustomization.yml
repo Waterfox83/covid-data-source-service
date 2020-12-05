@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ./data-publisher-httpdeploy.yaml
+
+commonLabels:
+  app: covid-data-source
