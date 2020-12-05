@@ -28,6 +28,8 @@ jobs:
       # Run unit tests.
       - name: Run unit tests
         run: ./gradlew test
+      - name: Build
+        run: ./gradlew clean build
 
   build-and-release:
     runs-on: ubuntu-latest
