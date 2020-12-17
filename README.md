@@ -31,3 +31,7 @@ to create and load the image.
 Push it to docker hub: `docker push waterfox83/covid-data-source-service:latest`
 
 Deploy the image on Kubernetes: `kubectl apply -f deploy/data-publisher-httpdeploy.yaml`
+
+## Github Actions
+
+On every push to 'dev' branch and merge of every PR, Actions run
