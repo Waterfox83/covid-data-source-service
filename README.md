@@ -34,4 +34,4 @@ Deploy the image on Kubernetes: `kubectl apply -f deploy/data-publisher-httpdepl
 
 ## Github Actions
 
-On every push to 'dev' branch and merge of every PR, Actions run
+On every push to 'dev' branch and merge of every PR, Actions run.
