@@ -56,6 +56,7 @@ dependencies {
   compile group: 'org.hibernate', name: 'hibernate-ehcache', version: '5.3.10.Final'
   compile group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.2.4.RELEASE'
   compile group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+  annotationProcessor 'org.projectlombok:lombok:1.18.8'
 
   compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
   compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'

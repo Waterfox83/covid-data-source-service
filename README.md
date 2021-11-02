@@ -31,3 +31,11 @@ to create and load the image.
 Push it to docker hub: `docker push waterfox83/covid-data-source-service:latest`
 
 Deploy the image on Kubernetes: `kubectl apply -f deploy/data-publisher-httpdeploy.yaml`
+
+To push to ACR:
+
+`az acr login -n <acr name>`
+
+`docker tag waterfox83/covid-data-source-service:latest <acr url>/covid-data-source-service:latest`
+
+`docker push <acr url>/covid-data-source-service:latest`
