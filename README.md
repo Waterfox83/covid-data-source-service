@@ -39,3 +39,6 @@ To push to ACR:
 `docker tag waterfox83/covid-data-source-service:latest <acr url>/covid-data-source-service:latest`
 
 `docker push <acr url>/covid-data-source-service:latest`
+
+
+Test2

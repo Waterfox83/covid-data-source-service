@@ -49,12 +49,15 @@ public class CovidDataController {
 
   @PostMapping("test-post")
   public void postTestData(@RequestBody Object body) throws IOException {
+    System.out.println("In Test-Post");
+    log.info("In Test-Post");
     try {
       ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
       String json = ow.writeValueAsString(body);
       JsonElement jsonElement = new JsonParser().parse(json);
       JsonElement pullRequest = jsonElement.getAsJsonObject().get("pullRequest");
       JsonElement description = pullRequest.getAsJsonObject().get("description");
+      System.out.println(description);
       log.info(String.valueOf(description));
     } catch (JsonProcessingException e) {
       log.error("Failed to parse request body",e);
