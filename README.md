@@ -41,4 +41,4 @@ To push to ACR:
 `docker push <acr url>/covid-data-source-service:latest`
 
 
-Test
+Test2
