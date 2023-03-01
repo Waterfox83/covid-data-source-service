@@ -1,15 +1,17 @@
 package com.jda.covidpublisher.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.jda.covidpublisher.api.stats.CountryStatsData;
 import com.jda.covidpublisher.kafka.producer.WorldStatsMessage;
 import com.jda.covidpublisher.service.CovidDataService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -43,6 +45,20 @@ public class CovidDataController {
   @GetMapping(Routes.TEST)
   public String getTestData() throws IOException {
     return "Hello World";
+  }
+
+  @PostMapping("test-post")
+  public void postTestData(@RequestBody Object body) throws IOException {
+    try {
+      ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+      String json = ow.writeValueAsString(body);
+      JsonElement jsonElement = new JsonParser().parse(json);
+      JsonElement pullRequest = jsonElement.getAsJsonObject().get("pullRequest");
+      JsonElement description = pullRequest.getAsJsonObject().get("description");
+      log.info(String.valueOf(description));
+    } catch (JsonProcessingException e) {
+      log.error("Failed to parse request body",e);
+    }
   }
 
 }

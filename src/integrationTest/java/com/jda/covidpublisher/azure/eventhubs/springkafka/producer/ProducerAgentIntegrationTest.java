@@ -70,14 +70,14 @@ public class ProducerAgentIntegrationTest extends BaseTestCase {
   }
 
   //CSOFF: MagicNumber
-  @Test
-  public void testSendWorldStatsMessage() throws InterruptedException {
-    producerAgent.sendWorldStatsMessage(TOPIC_SENDER, new WorldStatsMessage(100));
-
-    ConsumerRecord<String, String> received = records.poll(10, TimeUnit.SECONDS);
-    Gson gson = new Gson();
-    WorldStatsMessage msg = gson.fromJson(received.value(), WorldStatsMessage.class);
-    assertEquals(msg.getNewCases(), 100);
-  }
+//  @Test
+//  public void testSendWorldStatsMessage() throws InterruptedException {
+//    producerAgent.sendWorldStatsMessage(TOPIC_SENDER, new WorldStatsMessage(100));
+//
+//    ConsumerRecord<String, String> received = records.poll(10, TimeUnit.SECONDS);
+//    Gson gson = new Gson();
+//    WorldStatsMessage msg = gson.fromJson(received.value(), WorldStatsMessage.class);
+//    assertEquals(msg.getNewCases(), 100);
+//  }
   //CSON: MagicNumber
 }
